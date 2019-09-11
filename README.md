@@ -12,13 +12,11 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
+[image1]: ./images/model.PNG "Model Visualization"
+[image2]: ./images/images.PNG "Training Images"
 [image3]: ./examples/placeholder_small.png "Recovery Image"
 [image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -53,6 +51,8 @@ It consists of a convolution neural network with 4 convolutionnal layers with 5x
 I added 2 dropout layers to avoid overfitting.
 The loss is calculated with mean squared error since it's a regression case.
 
+![alt text][image1]
+
 I normalized the data outside of the network with a preprocessing phase. The data is preprocessed accordingly in the drive.py file. 
 
 #### 2. Attempts to reduce overfitting in the model
@@ -67,7 +67,12 @@ The model used an adam optimizer, so the learning rate was not tuned manually.
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road.
+Training data was chosen to keep the vehicle driving on the center of the road. I drove the car using the mouse on my personal computer to get more precise steering data. Doing so in the cloud was too laggy to drive properly.
+I used the 3 camera to train the network. The side camera were used to create "recovery" images to help the car get back to the center of the road when it's drifting to the side. I added or substracted 0.1 to the steering to the data associated to the side images (code line 34).
+
+![alt text][image2]
+
+The adding of the side cameras was key, this is what helped the model perform to its best. Before using them, the car was unable to recover from bad positionning and would get off the road on certain turns.
 
 ### Model Architecture and Training Strategy
 
@@ -80,44 +85,22 @@ From the begining I added 2 dropout layers, and it already gave results that wer
 
 To combat the overfitting, I made sur I took enough training data, running through the lap 3 times one way, and 3 times the other way.
 
-Then I ... 
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
-
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track, to improve the driving behavior I added the side cameras to the training data.
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
-#### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+#### 2. Creation of the Training Set & Training Process
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
+To capture good driving behavior, I first recorded 3 laps on track  going one way and 3 laps going the other way. Doing so help the model generalise to all kinf of turn (since it's a round track, it is left turn heavy going one way)
 
-![alt text][image1]
-
-#### 3. Creation of the Training Set & Training Process
-
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
-
-![alt text][image2]
-
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+After the collection process, I had 22 185 number of data points. I then preprocessed this data by converting to the YUV color space, cropping the image to remove the sky and the hood of the car, blurring it a little to smooth it out and finaly normalized it by dividing the pixels value by 255.
 
 ![alt text][image3]
+
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
+
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 20 as evidenced by the training graph. I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
 ![alt text][image4]
-![alt text][image5]
-
-Then I repeated this process on track two in order to get more data points.
-
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.

@@ -15,7 +15,7 @@ The goals / steps of this project are the following:
 [image1]: ./images/model.PNG "Model Visualization"
 [image2]: ./images/images.png "Training Images"
 [image3]: ./images/preprocess.png "Preprocessing"
-[image4]: ./imges/training.png "Training Plot"
+[image4]: ./images/training.png "Training Plot"
 
 
 ## Rubric Points

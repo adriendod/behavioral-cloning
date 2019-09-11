@@ -13,9 +13,9 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./images/model.PNG "Model Visualization"
-[image2]: ./images/images.PNG "Training Images"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
+[image2]: ./images/images.png "Training Images"
+[image3]: ./images/preprocess.png "Preprocessing"
+[image4]: ./imges/training.png "Training Plot"
 
 
 ## Rubric Points
